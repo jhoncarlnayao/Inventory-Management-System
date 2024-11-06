@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "JoMLmzQe1EZ3RAE9GlfwgY7rcrb+NF4Voae1aripT3O45AcjmzvIb5copS9A0BG0/LucOqhCLcVfBzPO/4L8Ng==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Gerry Untalan\\source\\repos\\IT12FINALPROJ\\IT12FINALPROJ\\IT12FINALPROJ.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Gerry Untalan\\.nuget\\packages\\guna.ui2.winforms\\2.0.4.6\\guna.ui2.winforms.2.0.4.6.nupkg.sha512",
+    "C:\\Users\\Gerry Untalan\\.nuget\\packages\\materialskin.2\\2.3.1\\materialskin.2.2.3.1.nupkg.sha512",
+    "C:\\Users\\Gerry Untalan\\.nuget\\packages\\system.codedom\\7.0.0\\system.codedom.7.0.0.nupkg.sha512",
+    "C:\\Users\\Gerry Untalan\\.nuget\\packages\\system.management\\7.0.0\\system.management.7.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
