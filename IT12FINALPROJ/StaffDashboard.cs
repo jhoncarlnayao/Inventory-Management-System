@@ -23,7 +23,8 @@ namespace IT12FINALPROJ
         public StaffDashboard()
         {
             InitializeComponent();
-
+            this.MinimizeBox = false;
+            this.MaximizeBox = false;
         }
 
         private void StaffDashboard_Load(object sender, EventArgs e)
@@ -33,6 +34,16 @@ namespace IT12FINALPROJ
             CountTotalAcceptProducts();
             CountTotalReturnProducts();
             LoadProductsOnOrder();
+
+
+            guna2DataGridView3.Columns.Add("productName", "Product Name");
+            guna2DataGridView3.Columns.Add("productDescription", "Product Description");
+            guna2DataGridView3.Columns.Add("productPrice", "Product Price");
+            guna2DataGridView3.Columns.Add("quantity", "Quantity");
+            guna2DataGridView3.Columns.Add("totalPrice", "Total Price");
+            guna2DataGridView3.Columns.Add("brand", "Brand");
+            guna2DataGridView3.Columns.Add("category", "Category");
+
         }
 
         public void CountTotalPendingProducts()
@@ -147,7 +158,7 @@ namespace IT12FINALPROJ
             }
         }
 
-       
+
 
 
 
@@ -614,7 +625,6 @@ namespace IT12FINALPROJ
         {
             if (guna2DataGridView2.SelectedRows.Count > 0)
             {
-
                 DataGridViewRow selectedRow = guna2DataGridView2.SelectedRows[0];
                 string productName = selectedRow.Cells["product_name"].Value.ToString();
                 string productDescription = selectedRow.Cells["product_description"].Value.ToString();
@@ -622,22 +632,22 @@ namespace IT12FINALPROJ
                 string brand = selectedRow.Cells["brand"].Value.ToString();
                 string category = selectedRow.Cells["category"].Value.ToString();
 
-
                 confirmationpanelorder.Visible = true;
 
-                confirmorder.Click += (s, args) =>
+                confirmorder.Click += ConfirmOrderClick;
+                cancelorder.Click += CancelOrderClick;
+
+                void ConfirmOrderClick(object s, EventArgs args)
                 {
                     int quantity = (int)quantityorder.Value;
 
                     if (quantity > 0)
                     {
-
                         decimal totalPrice = productPrice * quantity;
 
                         guna2DataGridView3.Rows.Add(productName, productDescription, productPrice, quantity, totalPrice, brand, category);
 
                         MessageBox.Show("Item added to cart successfully!");
-
 
                         quantityorder.Value = quantityorder.Minimum;
                         confirmationpanelorder.Visible = false;
@@ -646,13 +656,12 @@ namespace IT12FINALPROJ
                     {
                         MessageBox.Show("Please enter a valid quantity.");
                     }
-                };
+                }
 
-
-                cancelorder.Click += (s, args) =>
+                void CancelOrderClick(object s, EventArgs args)
                 {
                     confirmationpanelorder.Visible = false;
-                };
+                }
             }
             else
             {
@@ -660,6 +669,6 @@ namespace IT12FINALPROJ
             }
         }
     }
-}
+    }
 
 

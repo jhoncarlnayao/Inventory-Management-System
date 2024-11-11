@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             guna2DragControl1 = new Guna.UI2.WinForms.Guna2DragControl(components);
             guna2HtmlLabel3 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             usernameTextbox = new Guna.UI2.WinForms.Guna2TextBox();
@@ -69,7 +69,7 @@
             // 
             usernameTextbox.BorderColor = Color.FromArgb(136, 113, 205);
             usernameTextbox.BorderRadius = 20;
-            usernameTextbox.CustomizableEdges = customizableEdges1;
+            usernameTextbox.CustomizableEdges = customizableEdges7;
             usernameTextbox.DefaultText = "";
             usernameTextbox.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             usernameTextbox.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -86,7 +86,7 @@
             usernameTextbox.PasswordChar = '\0';
             usernameTextbox.PlaceholderText = "Username";
             usernameTextbox.SelectedText = "";
-            usernameTextbox.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            usernameTextbox.ShadowDecoration.CustomizableEdges = customizableEdges8;
             usernameTextbox.Size = new Size(373, 51);
             usernameTextbox.TabIndex = 0;
             // 
@@ -94,7 +94,7 @@
             // 
             passwordTextbox.BorderColor = Color.FromArgb(136, 113, 205);
             passwordTextbox.BorderRadius = 20;
-            passwordTextbox.CustomizableEdges = customizableEdges3;
+            passwordTextbox.CustomizableEdges = customizableEdges9;
             passwordTextbox.DefaultText = "";
             passwordTextbox.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             passwordTextbox.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -111,7 +111,7 @@
             passwordTextbox.PasswordChar = '\0';
             passwordTextbox.PlaceholderText = "Password";
             passwordTextbox.SelectedText = "";
-            passwordTextbox.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            passwordTextbox.ShadowDecoration.CustomizableEdges = customizableEdges10;
             passwordTextbox.Size = new Size(373, 51);
             passwordTextbox.TabIndex = 1;
             // 
@@ -119,7 +119,7 @@
             // 
             guna2Button1.BorderRadius = 20;
             guna2Button1.BorderThickness = 1;
-            guna2Button1.CustomizableEdges = customizableEdges5;
+            guna2Button1.CustomizableEdges = customizableEdges11;
             guna2Button1.DisabledState.BorderColor = Color.DarkGray;
             guna2Button1.DisabledState.CustomBorderColor = Color.DarkGray;
             guna2Button1.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -130,7 +130,7 @@
             guna2Button1.Location = new Point(66, 372);
             guna2Button1.Name = "guna2Button1";
             guna2Button1.PressedColor = Color.FloralWhite;
-            guna2Button1.ShadowDecoration.CustomizableEdges = customizableEdges6;
+            guna2Button1.ShadowDecoration.CustomizableEdges = customizableEdges12;
             guna2Button1.Size = new Size(373, 45);
             guna2Button1.TabIndex = 2;
             guna2Button1.Text = "Log in";
