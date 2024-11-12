@@ -5,11 +5,13 @@ using System;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace IT12FINALPROJ
 {
     public partial class StaffDashboard : MaterialForm
+
     {
         // Declare variables to hold product details
         private string productName;
@@ -25,7 +27,33 @@ namespace IT12FINALPROJ
             InitializeComponent();
             this.MinimizeBox = false;
             this.MaximizeBox = false;
+
+
+
+
+
         }
+
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+
+            int borderRadius = 30;
+
+
+            using (GraphicsPath path = new GraphicsPath())
+            {
+                path.AddArc(0, 0, borderRadius, borderRadius, 180, 90);
+                path.AddArc(this.Width - borderRadius - 1, 0, borderRadius, borderRadius, 270, 90);
+                path.AddArc(this.Width - borderRadius - 1, this.Height - borderRadius - 1, borderRadius, borderRadius, 0, 90);
+                path.AddArc(0, this.Height - borderRadius - 1, borderRadius, borderRadius, 90, 90);
+                path.CloseAllFigures();
+
+                this.Region = new Region(path);
+            }
+        }
+
 
         private void StaffDashboard_Load(object sender, EventArgs e)
         {
@@ -157,6 +185,73 @@ namespace IT12FINALPROJ
                 }
             }
         }
+
+        private void LoadInventoryProducts()
+        {
+
+            string connectionString = "Server=localhost;Database=it12proj;User ID=root;Password=;";
+
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+
+                    conn.Open();
+
+
+                    string query = "SELECT product_id, product_name, product_description, unit, quantity, brand, product_price, image_path, status, accepted_at FROM accepted_products";
+
+
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+
+                        guna2DataGridView4.Rows.Clear();
+
+                        while (reader.Read())
+                        {
+
+                            int productId = reader.GetInt32("product_id");
+                            string productName = reader.GetString("product_name");
+                            string productDescription = reader.IsDBNull(reader.GetOrdinal("product_description")) ? string.Empty : reader.GetString("product_description");
+                            string unit = reader.GetString("unit");
+                            int quantity = reader.GetInt32("quantity");
+                            string brand = reader.IsDBNull(reader.GetOrdinal("brand")) ? string.Empty : reader.GetString("brand");
+                            decimal productPrice = reader.GetDecimal("product_price");
+                            string imagePath = reader.IsDBNull(reader.GetOrdinal("image_path")) ? string.Empty : reader.GetString("image_path");
+                            string status = reader.GetString("status");
+                            DateTime acceptedAt = reader.GetDateTime("accepted_at");
+
+
+                            Image productImage = string.IsNullOrEmpty(imagePath) ? null : Image.FromFile(imagePath);
+
+
+                            guna2DataGridView4.Rows.Add(
+                                false,                            // Checkbox column (default value false)
+                                productImage,                     // Image column
+                                productName,                      // Product name
+                                productDescription,               // Product description
+                                unit,                             // Unit
+                                quantity,                         // Quantity
+                                brand,                            // Brand
+                                productPrice.ToString("C2"),      // Product price (formatted)
+                                status,                           // Status
+                                acceptedAt.ToString("yyyy-MM-dd") // Accepted at
+                            );
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+            }
+        }
+
+
 
 
 
@@ -538,7 +633,7 @@ namespace IT12FINALPROJ
         private void guna2Button11_Click(object sender, EventArgs e)
         {
             string connectionString = "Server=localhost;Database=it12proj;User=root;Password=;";
-            string query = "SELECT product_id, product_name, product_description, unit, product_price, quantity, brand,category,  image_path,return_reason, created_at FROM pending_return";
+            string query = "SELECT return_id, product_id, product_name, product_description, unit, product_price, quantity, brand, category, image_path, return_reason, created_at FROM pending_return";
 
             DataTable dataTable = new DataTable();
 
@@ -563,15 +658,13 @@ namespace IT12FINALPROJ
                 guna2DataGridView1.AutoResizeColumns();
                 guna2DataGridView1.ColumnHeadersHeight = 40;
 
-                // Hide the product_id column
-                guna2DataGridView1.Columns["product_id"].Visible = false;
+                guna2DataGridView1.Columns["return_id"].Visible = false; // Hide return_id if you don’t want to display it
 
                 foreach (DataGridViewColumn column in guna2DataGridView1.Columns)
                 {
-                    column.Width = 150; // Adjust column width
+                    column.Width = 150;
                 }
 
-                // Optional: Refresh the DataGridView to make sure it's updated properly
                 guna2DataGridView1.Refresh();
             }
             catch (Exception ex)
@@ -579,6 +672,7 @@ namespace IT12FINALPROJ
                 MessageBox.Show("Error: " + ex.Message);
             }
         }
+
 
         private void guna2Button13_Click(object sender, EventArgs e)
         {
@@ -634,6 +728,11 @@ namespace IT12FINALPROJ
 
                 confirmationpanelorder.Visible = true;
 
+
+                // Unsubscribe before adding handlers to prevent multiple subscriptions
+                confirmorder.Click -= ConfirmOrderClick;
+                cancelorder.Click -= CancelOrderClick;
+
                 confirmorder.Click += ConfirmOrderClick;
                 cancelorder.Click += CancelOrderClick;
 
@@ -668,7 +767,160 @@ namespace IT12FINALPROJ
                 MessageBox.Show("Please select a product to add to the cart.");
             }
         }
+
+
+        private void guna2HtmlLabel53_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void guna2Button16_Click_1(object sender, EventArgs e)
+        {
+            string connectionString = "Server=localhost;Database=it12proj;User=root;Password=;";
+            string query = "SELECT product_id, product_name, product_description, unit, product_price, quantity, brand,category,  image_path,return_reason, accepted_at FROM accepted_returns";
+
+            DataTable dataTable = new DataTable();
+
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        using (MySqlDataAdapter dataAdapter = new MySqlDataAdapter(command))
+                        {
+                            dataAdapter.Fill(dataTable);
+                        }
+                    }
+                }
+
+                guna2DataGridView1.DataSource = dataTable;
+                guna2DataGridView1.ColumnHeadersVisible = true;
+                guna2DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                guna2DataGridView1.AutoResizeColumns();
+                guna2DataGridView1.ColumnHeadersHeight = 40;
+
+                // Hide the product_id column
+                guna2DataGridView1.Columns["product_id"].Visible = false;
+
+                foreach (DataGridViewColumn column in guna2DataGridView1.Columns)
+                {
+                    column.Width = 150; // Adjust column width
+                }
+
+                // Optional: Refresh the DataGridView to make sure it's updated properly
+                guna2DataGridView1.Refresh();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
+
+        private void guna2Button9_Click(object sender, EventArgs e)
+        {
+            if (guna2DataGridView1.SelectedRows.Count > 0)
+            {
+                DataGridViewRow selectedRow = guna2DataGridView1.SelectedRows[0];
+
+                int returnId = Convert.ToInt32(selectedRow.Cells["return_id"].Value);  // Use return_id as primary key for deletion
+                int productId = Convert.ToInt32(selectedRow.Cells["product_id"].Value);
+                string productName = selectedRow.Cells["product_name"].Value.ToString();
+                string productDescription = selectedRow.Cells["product_description"].Value.ToString();
+                string unit = selectedRow.Cells["unit"].Value.ToString();
+                decimal productPrice = Convert.ToDecimal(selectedRow.Cells["product_price"].Value);
+                int quantity = Convert.ToInt32(selectedRow.Cells["quantity"].Value);
+                string brand = selectedRow.Cells["brand"].Value.ToString();
+                string imagePath = selectedRow.Cells["image_path"].Value.ToString();
+                string category = selectedRow.Cells["category"].Value.ToString();
+                string returnReason = selectedRow.Cells["return_reason"].Value.ToString();
+
+                string connectionString = "Server=localhost;Database=it12proj;User=root;Password=;";
+
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    try
+                    {
+                        connection.Open();
+
+                        using (MySqlTransaction transaction = connection.BeginTransaction())
+                        {
+                            // Insert into accepted_returns
+                            string insertQuery = @"
+                    INSERT INTO accepted_returns (product_id, product_name, product_description, unit, product_price, quantity, brand, category, image_path, return_reason, accepted_at)
+                    VALUES (@product_id, @product_name, @product_description, @unit, @product_price, @quantity, @brand, @category, @image_path, @return_reason, @accepted_at)";
+
+                            using (MySqlCommand insertCommand = new MySqlCommand(insertQuery, connection, transaction))
+                            {
+                                insertCommand.Parameters.AddWithValue("@product_id", productId);
+                                insertCommand.Parameters.AddWithValue("@product_name", productName);
+                                insertCommand.Parameters.AddWithValue("@product_description", productDescription);
+                                insertCommand.Parameters.AddWithValue("@unit", unit);
+                                insertCommand.Parameters.AddWithValue("@product_price", productPrice);
+                                insertCommand.Parameters.AddWithValue("@quantity", quantity);
+                                insertCommand.Parameters.AddWithValue("@brand", brand);
+                                insertCommand.Parameters.AddWithValue("@category", category);
+                                insertCommand.Parameters.AddWithValue("@image_path", imagePath);
+                                insertCommand.Parameters.AddWithValue("@return_reason", returnReason);
+                                insertCommand.Parameters.AddWithValue("@accepted_at", DateTime.Now);
+
+                                insertCommand.ExecuteNonQuery();
+                            }
+
+                            // Delete from pending_return using return_id
+                            string deleteQuery = "DELETE FROM pending_return WHERE return_id = @return_id";
+                            using (MySqlCommand deleteCommand = new MySqlCommand(deleteQuery, connection, transaction))
+                            {
+                                deleteCommand.Parameters.AddWithValue("@return_id", returnId); // Use return_id as primary key in pending_return
+                                deleteCommand.ExecuteNonQuery();
+                            }
+
+                            transaction.Commit();
+                        }
+
+                        MessageBox.Show("Return confirmed and moved to accepted returns!");
+                        guna2Button11_Click(sender, e); // Refresh pending return table
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error: " + ex.Message);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a product to confirm return.");
+            }
+        }
+
+        private void guna2DataGridView4_CellContentClick(object sender, DataGridViewCellEventArgs e) // !! KAUBAN NI SA INVENTORY PRODUCTS TABLE
+        {
+
+        }
+
+        private void guna2Button19_Click(object sender, EventArgs e) //!! THIS IS BUTTON FOR MY INVENTORY PRODUCT LIST
+        {
+            LoadInventoryProducts();
+        }
+
+        private void guna2DataGridView3_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // CART TABLE
+        }
+
+        private void confirmationpanelorder_Paint(object sender, PaintEventArgs e)
+        {
+            
+        }
+
+        private void guna2Button15_Click(object sender, EventArgs e)
+        {
+            // CHECK OUT BUTTON
+        }
     }
-    }
+
+}
 
 

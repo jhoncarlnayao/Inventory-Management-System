@@ -1,5 +1,6 @@
 using MaterialSkin.Controls;
 using MySql.Data.MySqlClient;
+using System.Drawing.Drawing2D;
 namespace IT12FINALPROJ
 {
     public partial class Login : MaterialForm
@@ -7,6 +8,26 @@ namespace IT12FINALPROJ
         public Login()
         {
             InitializeComponent();
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+
+            // Define the border radius
+            int borderRadius = 30;  // Change this value for more/less rounding
+
+            // Set the form's region (rounded corners)
+            using (GraphicsPath path = new GraphicsPath())
+            {
+                path.AddArc(0, 0, borderRadius, borderRadius, 180, 90); // Top-left corner
+                path.AddArc(this.Width - borderRadius - 1, 0, borderRadius, borderRadius, 270, 90); // Top-right corner
+                path.AddArc(this.Width - borderRadius - 1, this.Height - borderRadius - 1, borderRadius, borderRadius, 0, 90); // Bottom-right corner
+                path.AddArc(0, this.Height - borderRadius - 1, borderRadius, borderRadius, 90, 90); // Bottom-left corner
+                path.CloseAllFigures();
+
+                this.Region = new Region(path);
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
