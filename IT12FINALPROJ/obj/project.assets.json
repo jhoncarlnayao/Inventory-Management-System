@@ -167,6 +167,22 @@
           }
         }
       },
+      "ReaLTaiizor/3.8.0.7": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0-windows7.0/ReaLTaiizor.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0-windows7.0/ReaLTaiizor.dll": {
+            "related": ".xml"
+          }
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App.WindowsForms"
+        ]
+      },
       "System.Buffers/4.5.1": {
         "type": "package",
         "compile": {
@@ -751,6 +767,34 @@
         "runtimes/win-x64/native/k5sprt64.dll",
         "runtimes/win-x64/native/krb5_64.dll",
         "runtimes/win-x64/native/krbcc64.dll"
+      ]
+    },
+    "ReaLTaiizor/3.8.0.7": {
+      "sha512": "BTqUqATyfrNLE9I3Uga+g3QqidUn8bPv1W59thmJL8lsCxbzF5mgyRra2qLpRuA8I7ZQx4BRWexPLt5YAGbszQ==",
+      "type": "package",
+      "path": "realtaiizor/3.8.0.7",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "README.MD",
+        "Taiizor.png",
+        "lib/net48/ReaLTaiizor.dll",
+        "lib/net48/ReaLTaiizor.xml",
+        "lib/net481/ReaLTaiizor.dll",
+        "lib/net481/ReaLTaiizor.xml",
+        "lib/net6.0-windows7.0/ReaLTaiizor.dll",
+        "lib/net6.0-windows7.0/ReaLTaiizor.xml",
+        "lib/net7.0-windows7.0/ReaLTaiizor.dll",
+        "lib/net7.0-windows7.0/ReaLTaiizor.xml",
+        "lib/net8.0-windows7.0/ReaLTaiizor.dll",
+        "lib/net8.0-windows7.0/ReaLTaiizor.xml",
+        "lib/net9.0-windows7.0/ReaLTaiizor.dll",
+        "lib/net9.0-windows7.0/ReaLTaiizor.xml",
+        "lib/netcoreapp3.1/ReaLTaiizor.dll",
+        "lib/netcoreapp3.1/ReaLTaiizor.xml",
+        "realtaiizor.3.8.0.7.nupkg.sha512",
+        "realtaiizor.nuspec"
       ]
     },
     "System.Buffers/4.5.1": {
@@ -1769,7 +1813,8 @@
     "net8.0-windows7.0": [
       "Guna.UI2.WinForms >= 2.0.4.6",
       "MaterialSkin.2 >= 2.3.1",
-      "MySql.Data >= 9.1.0"
+      "MySql.Data >= 9.1.0",
+      "ReaLTaiizor >= 3.8.0.7"
     ]
   },
   "packageFolders": {
@@ -1832,6 +1877,10 @@
           "MySql.Data": {
             "target": "Package",
             "version": "[9.1.0, )"
+          },
+          "ReaLTaiizor": {
+            "target": "Package",
+            "version": "[3.8.0.7, )"
           }
         },
         "imports": [

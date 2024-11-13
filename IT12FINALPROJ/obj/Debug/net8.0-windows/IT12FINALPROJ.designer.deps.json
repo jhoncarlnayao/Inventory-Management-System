@@ -122,6 +122,14 @@
           }
         }
       },
+      "ReaLTaiizor/3.8.0.7": {
+        "runtime": {
+          "lib/net8.0-windows7.0/ReaLTaiizor.dll": {
+            "assemblyVersion": "3.8.0.7",
+            "fileVersion": "3.8.0.7"
+          }
+        }
+      },
       "System.Buffers/4.5.1": {},
       "System.CodeDom/7.0.0": {
         "runtime": {
@@ -425,6 +433,13 @@
       "sha512": "sha512-E4t/IQzcXg4nYGqrGkoGwwSWA1V2L+LKzVddPABAPcj2i6RESP2fcZQ4XFC0Wv+Cq4DlgR3DYhX/fGaZ3VxCPQ==",
       "path": "mysql.data/9.1.0",
       "hashPath": "mysql.data.9.1.0.nupkg.sha512"
+    },
+    "ReaLTaiizor/3.8.0.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-BTqUqATyfrNLE9I3Uga+g3QqidUn8bPv1W59thmJL8lsCxbzF5mgyRra2qLpRuA8I7ZQx4BRWexPLt5YAGbszQ==",
+      "path": "realtaiizor/3.8.0.7",
+      "hashPath": "realtaiizor.3.8.0.7.nupkg.sha512"
     },
     "System.Buffers/4.5.1": {
       "type": "package",

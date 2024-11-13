@@ -61,7 +61,10 @@ namespace IT12FINALPROJ
             CountTotalPendingProducts();
             CountTotalAcceptProducts();
             CountTotalReturnProducts();
+            CountTotalPendingReturnProducts();
             LoadProductsOnOrder();
+
+            update_confirmupdate.Click += update_confirmupdate_Click;
 
 
             guna2DataGridView3.Columns.Add("productName", "Product Name");
@@ -112,6 +115,25 @@ namespace IT12FINALPROJ
             AcceptedProduct.Text = totalCount.ToString();
         }
 
+        public void CountTotalPendingReturnProducts()
+        {
+            string connectionString = "Server=localhost;Database=it12proj;User=root;Password=;";
+            int totalCount = 0;
+
+            string query = "SELECT COUNT(*) FROM pending_return";
+
+            using (MySqlConnection con = new MySqlConnection(connectionString))
+            {
+                con.Open();
+                using (MySqlCommand cmd = new MySqlCommand(query, con))
+                {
+                    totalCount = Convert.ToInt32(cmd.ExecuteScalar());
+                }
+            }
+
+            pendingreturnproduct.Text = totalCount.ToString();
+        }
+
         public void CountTotalReturnProducts()
         {
             string connectionString = "Server=localhost;Database=it12proj;User=root;Password=;";
@@ -140,11 +162,10 @@ namespace IT12FINALPROJ
                 {
                     connection.Open();
 
-
                     string query = @"
-            SELECT product_name, product_description, product_price, quantity, brand, image_path, category
-            FROM accepted_products
-            WHERE status = 'APPROVED'";
+                SELECT product_name, product_description, product_price, quantity, brand, image_path, category
+                FROM accepted_products
+                WHERE status = 'APPROVED'";
 
                     if (!string.IsNullOrEmpty(category))
                     {
@@ -163,16 +184,31 @@ namespace IT12FINALPROJ
                             DataTable dataTable = new DataTable();
                             adapter.Fill(dataTable);
 
+                            // Debug: Print column names to verify
+                            foreach (DataColumn column in dataTable.Columns)
+                            {
+                                Console.WriteLine("Column: " + column.ColumnName);
+                            }
+
+
+                            guna2DataGridView2.AutoGenerateColumns = true;
                             guna2DataGridView2.DataSource = dataTable;
 
 
-                            guna2DataGridView2.Columns["product_name"].HeaderText = "Product Name";
-                            guna2DataGridView2.Columns["product_description"].HeaderText = "Description";
-                            guna2DataGridView2.Columns["product_price"].HeaderText = "Price";
-                            guna2DataGridView2.Columns["quantity"].HeaderText = "Quantity";
-                            guna2DataGridView2.Columns["brand"].HeaderText = "Brand";
-                            guna2DataGridView2.Columns["image_path"].HeaderText = "Image Path";
-                            guna2DataGridView2.Columns["category"].HeaderText = "Category";
+                            if (dataTable.Columns.Contains("product_name"))
+                                guna2DataGridView2.Columns["product_name"].HeaderText = "Product Name";
+                            if (dataTable.Columns.Contains("product_description"))
+                                guna2DataGridView2.Columns["product_description"].HeaderText = "Description";
+                            if (dataTable.Columns.Contains("product_price"))
+                                guna2DataGridView2.Columns["product_price"].HeaderText = "Price";
+                            if (dataTable.Columns.Contains("quantity"))
+                                guna2DataGridView2.Columns["quantity"].HeaderText = "Quantity";
+                            if (dataTable.Columns.Contains("brand"))
+                                guna2DataGridView2.Columns["brand"].HeaderText = "Brand";
+                            if (dataTable.Columns.Contains("image_path"))
+                                guna2DataGridView2.Columns["image_path"].HeaderText = "Image Path";
+                            if (dataTable.Columns.Contains("category"))
+                                guna2DataGridView2.Columns["category"].HeaderText = "Category";
 
                             guna2DataGridView2.ColumnHeadersVisible = true;
                             guna2DataGridView2.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -186,49 +222,39 @@ namespace IT12FINALPROJ
             }
         }
 
+
         private void LoadInventoryProducts()
         {
-
             string connectionString = "Server=localhost;Database=it12proj;User ID=root;Password=;";
-
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 try
                 {
-
                     conn.Open();
-
-
-                    string query = "SELECT product_id, product_name, product_description, unit, quantity, brand, product_price, image_path, status, accepted_at FROM accepted_products";
-
-
+                    string query = "SELECT product_id, product_name, product_description, unit, quantity, brand, product_price, image_path, status, category, accepted_at FROM accepted_products";
                     MySqlCommand cmd = new MySqlCommand(query, conn);
-
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
-
-                        guna2DataGridView4.Rows.Clear();
-
                         while (reader.Read())
                         {
-
                             int productId = reader.GetInt32("product_id");
                             string productName = reader.GetString("product_name");
                             string productDescription = reader.IsDBNull(reader.GetOrdinal("product_description")) ? string.Empty : reader.GetString("product_description");
                             string unit = reader.GetString("unit");
                             int quantity = reader.GetInt32("quantity");
+                            string category = reader.GetString("category");
                             string brand = reader.IsDBNull(reader.GetOrdinal("brand")) ? string.Empty : reader.GetString("brand");
                             decimal productPrice = reader.GetDecimal("product_price");
                             string imagePath = reader.IsDBNull(reader.GetOrdinal("image_path")) ? string.Empty : reader.GetString("image_path");
                             string status = reader.GetString("status");
                             DateTime acceptedAt = reader.GetDateTime("accepted_at");
 
-
+                            // Load the product image if the path is not empty
                             Image productImage = string.IsNullOrEmpty(imagePath) ? null : Image.FromFile(imagePath);
 
-
+                            // Add row to the DataGridView
                             guna2DataGridView4.Rows.Add(
                                 false,                            // Checkbox column (default value false)
                                 productImage,                     // Image column
@@ -236,10 +262,12 @@ namespace IT12FINALPROJ
                                 productDescription,               // Product description
                                 unit,                             // Unit
                                 quantity,                         // Quantity
+                                category,                         // Category
                                 brand,                            // Brand
                                 productPrice.ToString("C2"),      // Product price (formatted)
                                 status,                           // Status
-                                acceptedAt.ToString("yyyy-MM-dd") // Accepted at
+                                acceptedAt.ToString("yyyy-MM-dd"), // Accepted at
+                                productId                          // Product ID (hidden column)
                             );
                         }
                     }
@@ -249,7 +277,27 @@ namespace IT12FINALPROJ
                     MessageBox.Show("Error: " + ex.Message);
                 }
             }
+
+            // Ensure product_id column exists and hide it
+            if (guna2DataGridView4.Columns.Contains("productid"))
+            {
+                guna2DataGridView4.Columns["productid"].Visible = false;  // Hide the product_id column
+            }
+            else
+            {
+                // If the column doesn't exist, you can manually add it if needed
+                DataGridViewTextBoxColumn productIdColumn = new DataGridViewTextBoxColumn();
+                productIdColumn.Name = "productid";
+                productIdColumn.HeaderText = "Product ID"; // Optionally, set header text
+                productIdColumn.Visible = false; // Hide it
+                guna2DataGridView4.Columns.Add(productIdColumn);
+            }
         }
+
+
+
+
+
 
 
 
@@ -912,15 +960,142 @@ namespace IT12FINALPROJ
 
         private void confirmationpanelorder_Paint(object sender, PaintEventArgs e)
         {
-            
+
         }
 
         private void guna2Button15_Click(object sender, EventArgs e)
         {
             // CHECK OUT BUTTON
         }
-    }
 
+        private void guna2HtmlLabel51_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void guna2Panel23_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void inventory_updatebutton_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in guna2DataGridView4.Rows)
+            {
+                // Check if the checkbox in the row is selected
+                bool isSelected = Convert.ToBoolean(row.Cells["Select"].Value); // The checkbox column name is "Select"
+
+                if (isSelected)
+                {
+                    // Use the correct column names that match your DataGridView
+                    string productName = row.Cells["product_name"].Value.ToString(); // Column name is "product_name"
+                    string productDescription = row.Cells["product_description"].Value.ToString(); // Column name is "product_description"
+                    string unit = row.Cells["unitt"].Value.ToString(); // Column name is "unitt"
+                    string category = "N/A"; // There is no "category" column, assuming you need to handle it differently
+
+                    // Get the product price, remove the currency symbol, and convert to decimal
+                    string priceString = row.Cells["product_price"].Value.ToString(); // Column name is "product_price"
+                    decimal productPrice = 0;
+
+                    // Remove currency symbol and any commas
+                    if (!string.IsNullOrEmpty(priceString))
+                    {
+                        priceString = priceString.Replace("₱", "").Replace(",", "").Trim();
+                        if (decimal.TryParse(priceString, out productPrice))
+                        {
+                            // Successfully converted to decimal
+                        }
+                        else
+                        {
+                            // Handle the error if conversion fails
+                            MessageBox.Show("Invalid price format.");
+                        }
+                    }
+
+                    // Populate the fields in the update panel
+                    update_productname.Text = productName;
+                    update_productdescription.Text = productDescription;
+                    update_unit.SelectedItem = unit;
+                    update_category.SelectedItem = category; // Update how the category is set if applicable
+                    update_price.Text = productPrice.ToString("F2");
+
+                    // Display the update panel
+                    inventory_product_upatepanel.Visible = true;
+                    break; // Show for the first selected item
+                }
+            }
+        }
+
+
+
+
+
+
+        private void update_confirmupdate_Click(object sender, EventArgs e)
+        {
+          
+            string newProductName = update_productname.Text;
+            string newProductDescription = update_productdescription.Text;
+            string newUnit = update_unit.SelectedItem.ToString();
+            string newCategory = update_category.SelectedItem.ToString();
+            decimal newPrice = decimal.Parse(update_price.Text);
+
+
+            foreach (DataGridViewRow row in guna2DataGridView4.Rows)
+            {
+                bool isSelected = Convert.ToBoolean(row.Cells[0].Value); 
+
+                if (isSelected)
+                {
+                    int productId = Convert.ToInt32(row.Cells["productid"].Value); 
+
+                    // Update the database
+                    string connectionString = "Server=localhost;Database=it12proj;User ID=root;Password=;";
+                    using (MySqlConnection conn = new MySqlConnection(connectionString))
+                    {
+                        conn.Open();
+                        string query = "UPDATE accepted_products SET product_name = @name, product_description = @description, unit = @unit, " +
+                                       "category = @category, product_price = @price WHERE product_id = @id";
+                        MySqlCommand cmd = new MySqlCommand(query, conn);
+                        cmd.Parameters.AddWithValue("@name", newProductName);
+                        cmd.Parameters.AddWithValue("@description", newProductDescription);
+                        cmd.Parameters.AddWithValue("@unit", newUnit);
+                        cmd.Parameters.AddWithValue("@category", newCategory);
+                        cmd.Parameters.AddWithValue("@price", newPrice);
+                        cmd.Parameters.AddWithValue("@id", productId); // Use the product_id
+
+                        int rowsAffected = cmd.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Product updated successfully.");
+                        }
+                        else
+                        {
+                            MessageBox.Show("No rows were updated. Please check the product ID.");
+                        }
+                    }
+
+                    // Format the product price as currency when updating the DataGridView
+                    row.Cells["product_name"].Value = newProductName;
+                    row.Cells["product_description"].Value = newProductDescription;
+                    row.Cells["unitt"].Value = newUnit;
+                    row.Cells["categoryy"].Value = newCategory;
+                    row.Cells["product_price"].Value = newPrice.ToString("C2"); // Formatting price as currency
+
+                    inventory_product_upatepanel.Visible = false; // Hide the panel after updating
+                    break;
+                }
+            }
+        }
+
+
+
+
+
+    }
 }
+
+
 
 
