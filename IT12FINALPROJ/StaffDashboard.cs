@@ -27,6 +27,7 @@ namespace IT12FINALPROJ
             InitializeComponent();
             this.MinimizeBox = false;
             this.MaximizeBox = false;
+            Productserialnumber.TextChanged += Productserialnumber_TextChanged;
 
 
 
@@ -65,6 +66,7 @@ namespace IT12FINALPROJ
             LoadProductsOnOrder();
 
             update_confirmupdate.Click += update_confirmupdate_Click;
+            Productserialnumber.TextChanged += Productserialnumber_TextChanged;
 
 
             guna2DataGridView3.Columns.Add("productName", "Product Name");
@@ -326,15 +328,41 @@ namespace IT12FINALPROJ
 
         private void guna2Button2_Click(object sender, EventArgs e)
         {
-
-            //!! MAG ADD OG NEW PRODUCT
+            // PAG MAG ADD KA OG NEW PRODUCTS
             productName = Productname.Text;
             productDescription = Productdescription.Text;
             unit = productunit.SelectedItem.ToString();
             productPrice = decimal.Parse(productprice.Text);
-            quantity = int.Parse(productquantity.Text);
             brand = productbrand.Text;
             string ccategory = category.SelectedItem.ToString();
+            string productSupplier = Productsupplier.Text;
+            string productBatchNumber = Productbatchnumber.Text;
+            string productSerialNumber = Productserialnumber.Text;
+
+            // Validate Serial Number and Batch Number to ensure they are numeric
+            if (!int.TryParse(productSerialNumber, out _) && !string.IsNullOrEmpty(productSerialNumber))
+            {
+                MessageBox.Show("Serial Number must be numeric.");
+                return;
+            }
+
+            if (!int.TryParse(productBatchNumber, out _) && !string.IsNullOrEmpty(productBatchNumber))
+            {
+                MessageBox.Show("Batch Number must be numeric.");
+                return;
+            }
+
+            // Disable or enable quantity field based on serial number input
+            if (!string.IsNullOrEmpty(productSerialNumber))
+            {
+                productquantity.Enabled = false;
+                quantity = 1; // Default to 1 for serial number-specific products
+            }
+            else
+            {
+                productquantity.Enabled = true;
+                quantity = int.Parse(productquantity.Text); // Allow manual input for non-serial products
+            }
 
             if (productImage != null)
             {
@@ -357,8 +385,8 @@ namespace IT12FINALPROJ
                     {
                         connection.Open();
 
-                        string query = @"INSERT INTO pending_products (product_name, product_description, unit, product_price, quantity, brand, image_path, status, category)
-                                 VALUES (@product_name, @product_description, @unit, @product_price, @quantity, @brand, @image_path, 'PENDING', @category)";
+                        string query = @"INSERT INTO pending_products (product_name, product_description, unit, product_price, quantity, brand, image_path, status, category, supplier, batch_number, serial_number)
+                                 VALUES (@product_name, @product_description, @unit, @product_price, @quantity, @brand, @image_path, 'PENDING', @category, @supplier, @batch_number, @serial_number)";
 
                         using (MySqlCommand command = new MySqlCommand(query, connection))
                         {
@@ -370,6 +398,9 @@ namespace IT12FINALPROJ
                             command.Parameters.AddWithValue("@brand", brand);
                             command.Parameters.AddWithValue("@image_path", imageFilePath);
                             command.Parameters.AddWithValue("@category", ccategory);
+                            command.Parameters.AddWithValue("@supplier", productSupplier);
+                            command.Parameters.AddWithValue("@batch_number", productBatchNumber);
+                            command.Parameters.AddWithValue("@serial_number", productSerialNumber);
 
                             command.ExecuteNonQuery();
                             MessageBox.Show("Product added to pending products successfully!");
@@ -387,14 +418,21 @@ namespace IT12FINALPROJ
             }
         }
 
+        private void Productserialnumber_TextChanged(object sender, EventArgs e)
+        {
+            productquantity.Enabled = string.IsNullOrEmpty(Productserialnumber.Text);
+        }
+
+
+
+
 
         private void guna2Button4_Click(object sender, EventArgs e)
         {
             string connectionString = "Server=localhost;Database=it12proj;User=root;Password=;";
 
-
-            string query = "SELECT product_id, product_name, product_description, unit, product_price, quantity, brand,category, image_path, status, created_at FROM pending_products";
-
+            // Updated SQL query to include 'supplier', 'batch_number', and 'serial_number'
+            string query = "SELECT product_id, product_name, product_description, unit, product_price, quantity, brand, image_path, category, supplier, batch_number, serial_number, status, created_at FROM pending_products";
 
             DataTable dataTable = new DataTable();
 
@@ -402,13 +440,10 @@ namespace IT12FINALPROJ
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
-
                     connection.Open();
-
 
                     using (MySqlCommand command = new MySqlCommand(query, connection))
                     {
-
                         using (MySqlDataAdapter dataAdapter = new MySqlDataAdapter(command))
                         {
                             dataAdapter.Fill(dataTable);
@@ -416,34 +451,34 @@ namespace IT12FINALPROJ
                     }
                 }
 
-
+                // Set the DataSource to the updated DataTable
                 guna2DataGridView1.DataSource = dataTable;
 
-
+                // Configure the DataGridView appearance
                 guna2DataGridView1.ColumnHeadersVisible = true;
-
-
                 guna2DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 guna2DataGridView1.AutoResizeColumns();
                 guna2DataGridView1.ColumnHeadersHeight = 40;
 
+                // Hide 'product_id' column as it is not needed for display
                 guna2DataGridView1.Columns["product_id"].Visible = false;
 
-
+                // Set the width for each column for better visibility
                 foreach (DataGridViewColumn column in guna2DataGridView1.Columns)
                 {
                     column.Width = 150;
                 }
 
-
+                // Refresh the DataGridView to reflect changes
                 guna2DataGridView1.Refresh();
             }
             catch (Exception ex)
             {
-
+                // Handle errors
                 MessageBox.Show("Error: " + ex.Message);
             }
         }
+
 
         private void guna2Button6_Click(object sender, EventArgs e)
         {
@@ -464,7 +499,23 @@ namespace IT12FINALPROJ
                 int quantity = Convert.ToInt32(selectedRow.Cells["quantity"].Value);
                 string brand = selectedRow.Cells["brand"].Value.ToString();
                 string imagePath = selectedRow.Cells["image_path"].Value.ToString();
-                string category = selectedRow.Cells["category"].Value.ToString(); // Retrieve category
+                string category = selectedRow.Cells["category"].Value.ToString();
+                string productSupplier = selectedRow.Cells["supplier"].Value.ToString();
+                string productBatchNumber = selectedRow.Cells["batch_number"].Value?.ToString() ?? "";
+                string productSerialNumber = selectedRow.Cells["serial_number"].Value?.ToString() ?? "";
+
+                // Validate that batch and serial numbers are numeric if they exist
+                if (!string.IsNullOrEmpty(productBatchNumber) && !int.TryParse(productBatchNumber, out _))
+                {
+                    MessageBox.Show("Batch Number must be numeric.");
+                    return;
+                }
+
+                if (!string.IsNullOrEmpty(productSerialNumber) && !int.TryParse(productSerialNumber, out _))
+                {
+                    MessageBox.Show("Serial Number must be numeric.");
+                    return;
+                }
 
                 string connectionString = "Server=localhost;Database=it12proj;User=root;Password=;";
 
@@ -477,8 +528,8 @@ namespace IT12FINALPROJ
                         using (MySqlTransaction transaction = connection.BeginTransaction())
                         {
                             string insertQuery = @"
-                        INSERT INTO accepted_products (product_name, product_description, unit, product_price, quantity, brand, image_path, category, status, created_at, accepted_at)
-                        VALUES (@product_name, @product_description, @unit, @product_price, @quantity, @brand, @image_path, @category, 'APPROVED', @created_at, @accepted_at)";
+                    INSERT INTO accepted_products (product_name, product_description, unit, product_price, quantity, brand, image_path, category, status, supplier, batch_number, serial_number, created_at, accepted_at)
+                    VALUES (@product_name, @product_description, @unit, @product_price, @quantity, @brand, @image_path, @category, 'APPROVED', @supplier, @batch_number, @serial_number, @created_at, @accepted_at)";
 
                             using (MySqlCommand insertCommand = new MySqlCommand(insertQuery, connection, transaction))
                             {
@@ -489,7 +540,10 @@ namespace IT12FINALPROJ
                                 insertCommand.Parameters.AddWithValue("@quantity", quantity);
                                 insertCommand.Parameters.AddWithValue("@brand", brand);
                                 insertCommand.Parameters.AddWithValue("@image_path", imagePath);
-                                insertCommand.Parameters.AddWithValue("@category", category); // Add category
+                                insertCommand.Parameters.AddWithValue("@category", category);
+                                insertCommand.Parameters.AddWithValue("@supplier", productSupplier);
+                                insertCommand.Parameters.AddWithValue("@batch_number", productBatchNumber);
+                                insertCommand.Parameters.AddWithValue("@serial_number", productSerialNumber);
                                 insertCommand.Parameters.AddWithValue("@created_at", DateTime.Now);
                                 insertCommand.Parameters.AddWithValue("@accepted_at", DateTime.Now);
 
@@ -523,12 +577,16 @@ namespace IT12FINALPROJ
         }
 
 
+
         private void guna2Button5_Click(object sender, EventArgs e)
         {
             string connectionString = "Server=localhost;Database=it12proj;User=root;Password=;";
 
-            string query = "SELECT product_id, product_name, product_description, unit, product_price, quantity, brand,category , image_path, status, created_at, accepted_at FROM accepted_products";
-
+            // Updated query to include 'supplier', 'batch_number', and 'serial_number' columns
+            string query = @"SELECT product_id, product_name, product_description, unit, product_price, 
+                     quantity, brand, category, image_path, status, created_at, accepted_at, 
+                     supplier, batch_number, serial_number 
+                     FROM accepted_products";
 
             DataTable dataTable = new DataTable();
 
@@ -536,34 +594,32 @@ namespace IT12FINALPROJ
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
-
                     connection.Open();
-
 
                     using (MySqlCommand command = new MySqlCommand(query, connection))
                     {
-
                         using (MySqlDataAdapter dataAdapter = new MySqlDataAdapter(command))
                         {
-                            dataAdapter.Fill(dataTable);
+                            dataAdapter.Fill(dataTable); // Fill the DataTable with the result set
                         }
                     }
                 }
 
+                // Bind the DataTable to the DataGridView
                 guna2DataGridView1.DataSource = dataTable;
 
-
+                // Make headers visible and set the column auto-sizing properties
                 guna2DataGridView1.ColumnHeadersVisible = true;
-
-
                 guna2DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                guna2DataGridView1.AutoResizeColumns();
                 guna2DataGridView1.ColumnHeadersHeight = 40;
 
-                // Hide the product_id column 
-                guna2DataGridView1.Columns["product_id"].Visible = false;
+                // Hide the 'product_id' column if it's not necessary to display
+                if (guna2DataGridView1.Columns.Contains("product_id"))
+                {
+                    guna2DataGridView1.Columns["product_id"].Visible = false;
+                }
 
-
+                // Optional: Set specific widths for columns
                 foreach (DataGridViewColumn column in guna2DataGridView1.Columns)
                 {
                     column.Width = 150; // Adjust column width
@@ -574,10 +630,12 @@ namespace IT12FINALPROJ
             }
             catch (Exception ex)
             {
-
+                // Handle any exceptions and display an error message
                 MessageBox.Show("Error: " + ex.Message);
             }
         }
+
+
 
         private void guna2Button8_Click(object sender, EventArgs e)
         {
@@ -982,7 +1040,7 @@ namespace IT12FINALPROJ
         {
             foreach (DataGridViewRow row in guna2DataGridView4.Rows)
             {
-                // Check if the checkbox in the row is selected
+
                 bool isSelected = Convert.ToBoolean(row.Cells["Select"].Value); // The checkbox column name is "Select"
 
                 if (isSelected)
@@ -1007,7 +1065,7 @@ namespace IT12FINALPROJ
                         }
                         else
                         {
-                            // Handle the error if conversion fails
+
                             MessageBox.Show("Invalid price format.");
                         }
                     }
@@ -1021,7 +1079,7 @@ namespace IT12FINALPROJ
 
                     // Display the update panel
                     inventory_product_upatepanel.Visible = true;
-                    break; // Show for the first selected item
+                    break;
                 }
             }
         }
@@ -1033,7 +1091,7 @@ namespace IT12FINALPROJ
 
         private void update_confirmupdate_Click(object sender, EventArgs e)
         {
-          
+
             string newProductName = update_productname.Text;
             string newProductDescription = update_productdescription.Text;
             string newUnit = update_unit.SelectedItem.ToString();
@@ -1043,11 +1101,11 @@ namespace IT12FINALPROJ
 
             foreach (DataGridViewRow row in guna2DataGridView4.Rows)
             {
-                bool isSelected = Convert.ToBoolean(row.Cells[0].Value); 
+                bool isSelected = Convert.ToBoolean(row.Cells[0].Value);
 
                 if (isSelected)
                 {
-                    int productId = Convert.ToInt32(row.Cells["productid"].Value); 
+                    int productId = Convert.ToInt32(row.Cells["productid"].Value);
 
                     // Update the database
                     string connectionString = "Server=localhost;Database=it12proj;User ID=root;Password=;";
@@ -1089,10 +1147,10 @@ namespace IT12FINALPROJ
             }
         }
 
+        private void guna2HtmlLabel10_Click(object sender, EventArgs e)
+        {
 
-
-
-
+        }
     }
 }
 

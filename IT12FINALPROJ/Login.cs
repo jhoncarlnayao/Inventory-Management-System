@@ -67,8 +67,8 @@ namespace IT12FINALPROJ
                         {
                             MessageBox.Show("Admin logged in successfully!", "Login Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                            //  DashboardForm dashboard = new DashboardForm();
-                            //  dashboard.Show();
+                            StaffDashboard staffDashboard = new StaffDashboard();
+                            staffDashboard.Show();
                             this.Hide();
                         }
                         else if (role == "Staff")
