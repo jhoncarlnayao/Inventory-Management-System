@@ -65,6 +65,8 @@ namespace IT12FINALPROJ
             CountTotalPendingReturnProducts();
             LoadProductsOnOrder();
 
+            GenerateOrderNumber();
+
             update_confirmupdate.Click += update_confirmupdate_Click;
             Productserialnumber.TextChanged += Productserialnumber_TextChanged;
 
@@ -76,6 +78,10 @@ namespace IT12FINALPROJ
             guna2DataGridView3.Columns.Add("totalPrice", "Total Price");
             guna2DataGridView3.Columns.Add("brand", "Brand");
             guna2DataGridView3.Columns.Add("category", "Category");
+            guna2DataGridView3.Columns.Add("serial_number", "Serial Number");
+            guna2DataGridView3.Columns.Add("batch_number", "Batch Number");
+            guna2DataGridView3.Columns.Add("supplier", "Supplier");
+
 
         }
 
@@ -165,9 +171,19 @@ namespace IT12FINALPROJ
                     connection.Open();
 
                     string query = @"
-                SELECT product_name, product_description, product_price, quantity, brand, image_path, category
-                FROM accepted_products
-                WHERE status = 'APPROVED'";
+            SELECT 
+                product_name, 
+                product_description, 
+                product_price, 
+                quantity, 
+                brand, 
+                serial_number, 
+                batch_number, 
+                supplier, 
+                image_path, 
+                category 
+            FROM accepted_products
+            WHERE status = 'APPROVED'";
 
                     if (!string.IsNullOrEmpty(category))
                     {
@@ -186,17 +202,10 @@ namespace IT12FINALPROJ
                             DataTable dataTable = new DataTable();
                             adapter.Fill(dataTable);
 
-                            // Debug: Print column names to verify
-                            foreach (DataColumn column in dataTable.Columns)
-                            {
-                                Console.WriteLine("Column: " + column.ColumnName);
-                            }
-
-
                             guna2DataGridView2.AutoGenerateColumns = true;
                             guna2DataGridView2.DataSource = dataTable;
 
-
+                            // Set headers for the relevant columns
                             if (dataTable.Columns.Contains("product_name"))
                                 guna2DataGridView2.Columns["product_name"].HeaderText = "Product Name";
                             if (dataTable.Columns.Contains("product_description"))
@@ -207,6 +216,12 @@ namespace IT12FINALPROJ
                                 guna2DataGridView2.Columns["quantity"].HeaderText = "Quantity";
                             if (dataTable.Columns.Contains("brand"))
                                 guna2DataGridView2.Columns["brand"].HeaderText = "Brand";
+                            if (dataTable.Columns.Contains("serial_number"))
+                                guna2DataGridView2.Columns["serial_number"].HeaderText = "Serial Number";
+                            if (dataTable.Columns.Contains("batch_number"))
+                                guna2DataGridView2.Columns["batch_number"].HeaderText = "Batch Number";
+                            if (dataTable.Columns.Contains("supplier"))
+                                guna2DataGridView2.Columns["supplier"].HeaderText = "Supplier";
                             if (dataTable.Columns.Contains("image_path"))
                                 guna2DataGridView2.Columns["image_path"].HeaderText = "Image Path";
                             if (dataTable.Columns.Contains("category"))
@@ -225,6 +240,7 @@ namespace IT12FINALPROJ
         }
 
 
+
         private void LoadInventoryProducts()
         {
             string connectionString = "Server=localhost;Database=it12proj;User ID=root;Password=;";
@@ -234,7 +250,23 @@ namespace IT12FINALPROJ
                 try
                 {
                     conn.Open();
-                    string query = "SELECT product_id, product_name, product_description, unit, quantity, brand, product_price, image_path, status, category, accepted_at FROM accepted_products";
+                    string query = @"
+            SELECT 
+                product_id, 
+                product_name, 
+                product_description, 
+                unit, 
+                quantity, 
+                brand, 
+                product_price, 
+                image_path, 
+                status, 
+                category, 
+                accepted_at, 
+                supplier, 
+                batch_number, 
+                serial_number 
+            FROM accepted_products";
                     MySqlCommand cmd = new MySqlCommand(query, conn);
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
@@ -251,25 +283,31 @@ namespace IT12FINALPROJ
                             decimal productPrice = reader.GetDecimal("product_price");
                             string imagePath = reader.IsDBNull(reader.GetOrdinal("image_path")) ? string.Empty : reader.GetString("image_path");
                             string status = reader.GetString("status");
-                            DateTime acceptedAt = reader.GetDateTime("accepted_at");
+                            string acceptedAt = reader.GetDateTime("accepted_at").ToString("yyyy-MM-dd"); // Format as a string
+                            string supplier = reader.IsDBNull(reader.GetOrdinal("supplier")) ? string.Empty : reader.GetString("supplier");
+                            string batchNumber = reader.IsDBNull(reader.GetOrdinal("batch_number")) ? string.Empty : reader.GetString("batch_number");
+                            string serialNumber = reader.IsDBNull(reader.GetOrdinal("serial_number")) ? string.Empty : reader.GetString("serial_number");
 
                             // Load the product image if the path is not empty
                             Image productImage = string.IsNullOrEmpty(imagePath) ? null : Image.FromFile(imagePath);
 
                             // Add row to the DataGridView
                             guna2DataGridView4.Rows.Add(
-                                false,                            // Checkbox column (default value false)
-                                productImage,                     // Image column
-                                productName,                      // Product name
-                                productDescription,               // Product description
-                                unit,                             // Unit
-                                quantity,                         // Quantity
-                                category,                         // Category
-                                brand,                            // Brand
-                                productPrice.ToString("C2"),      // Product price (formatted)
-                                status,                           // Status
-                                acceptedAt.ToString("yyyy-MM-dd"), // Accepted at
-                                productId                          // Product ID (hidden column)
+                                false,            // Checkbox column (default value false)
+                                productImage,     // Image column
+                                productName,      // Product name
+                                productDescription, // Product description
+                                unit,             // Unit
+                                quantity,         // Quantity
+                                category,         // Category
+                                brand,            // Brand
+                                productPrice.ToString("C2"), // Product price (formatted)
+                                status,           // Status
+                                supplier,         // Supplier
+                                batchNumber,      // Batch number
+                                serialNumber,     // Serial number
+                                acceptedAt,       // Accepted at (formatted string)
+                                productId         // Product ID (hidden column)
                             );
                         }
                     }
@@ -288,13 +326,17 @@ namespace IT12FINALPROJ
             else
             {
                 // If the column doesn't exist, you can manually add it if needed
-                DataGridViewTextBoxColumn productIdColumn = new DataGridViewTextBoxColumn();
-                productIdColumn.Name = "productid";
-                productIdColumn.HeaderText = "Product ID"; // Optionally, set header text
-                productIdColumn.Visible = false; // Hide it
+                DataGridViewTextBoxColumn productIdColumn = new DataGridViewTextBoxColumn
+                {
+                    Name = "productid",
+                    HeaderText = "Product ID", // Optionally, set header text
+                    Visible = false // Hide it
+                };
                 guna2DataGridView4.Columns.Add(productIdColumn);
             }
         }
+
+
 
 
 
@@ -831,11 +873,12 @@ namespace IT12FINALPROJ
                 decimal productPrice = Convert.ToDecimal(selectedRow.Cells["product_price"].Value);
                 string brand = selectedRow.Cells["brand"].Value.ToString();
                 string category = selectedRow.Cells["category"].Value.ToString();
+                string serialNumber = selectedRow.Cells["serial_number"].Value.ToString();
+                string batchNumber = selectedRow.Cells["batch_number"].Value.ToString();
+                string supplier = selectedRow.Cells["supplier"].Value.ToString();
 
                 confirmationpanelorder.Visible = true;
 
-
-                // Unsubscribe before adding handlers to prevent multiple subscriptions
                 confirmorder.Click -= ConfirmOrderClick;
                 cancelorder.Click -= CancelOrderClick;
 
@@ -850,7 +893,18 @@ namespace IT12FINALPROJ
                     {
                         decimal totalPrice = productPrice * quantity;
 
-                        guna2DataGridView3.Rows.Add(productName, productDescription, productPrice, quantity, totalPrice, brand, category);
+                        guna2DataGridView3.Rows.Add(
+                            productName,
+                            productDescription,
+                            productPrice,
+                            quantity,
+                            totalPrice,
+                            brand,
+                            category,
+                            serialNumber,
+                            batchNumber,
+                            supplier
+                        );
 
                         MessageBox.Show("Item added to cart successfully!");
 
@@ -873,6 +927,7 @@ namespace IT12FINALPROJ
                 MessageBox.Show("Please select a product to add to the cart.");
             }
         }
+
 
 
         private void guna2HtmlLabel53_Click(object sender, EventArgs e)
@@ -1045,23 +1100,23 @@ namespace IT12FINALPROJ
 
                 if (isSelected)
                 {
-                    // Use the correct column names that match your DataGridView
-                    string productName = row.Cells["product_name"].Value.ToString(); // Column name is "product_name"
-                    string productDescription = row.Cells["product_description"].Value.ToString(); // Column name is "product_description"
-                    string unit = row.Cells["unitt"].Value.ToString(); // Column name is "unitt"
-                    string category = "N/A"; // There is no "category" column, assuming you need to handle it differently
 
-                    // Get the product price, remove the currency symbol, and convert to decimal
-                    string priceString = row.Cells["product_price"].Value.ToString(); // Column name is "product_price"
+                    string productName = row.Cells["product_name"].Value.ToString();
+                    string productDescription = row.Cells["product_description"].Value.ToString();
+                    string unit = row.Cells["unitt"].Value.ToString();
+                    string category = "N/A";
+
+
+                    string priceString = row.Cells["product_price"].Value.ToString();
                     decimal productPrice = 0;
 
-                    // Remove currency symbol and any commas
+
                     if (!string.IsNullOrEmpty(priceString))
                     {
                         priceString = priceString.Replace("₱", "").Replace(",", "").Trim();
                         if (decimal.TryParse(priceString, out productPrice))
                         {
-                            // Successfully converted to decimal
+
                         }
                         else
                         {
@@ -1074,10 +1129,10 @@ namespace IT12FINALPROJ
                     update_productname.Text = productName;
                     update_productdescription.Text = productDescription;
                     update_unit.SelectedItem = unit;
-                    update_category.SelectedItem = category; // Update how the category is set if applicable
+                    update_category.SelectedItem = category;
                     update_price.Text = productPrice.ToString("F2");
 
-                    // Display the update panel
+
                     inventory_product_upatepanel.Visible = true;
                     break;
                 }
@@ -1151,6 +1206,163 @@ namespace IT12FINALPROJ
         {
 
         }
+
+        private void guna2Panel21_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void guna2Panel20_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void openbtn_sumarrycart_Click(object sender, EventArgs e)
+        {
+            panel_summaryorder.Visible = true;
+
+
+
+        }
+
+        private void guna2Button15_Click_1(object sender, EventArgs e)
+        {
+            panel_summaryorder.Visible = false;
+        }
+
+        private void confirmorderbtn_summaryorder_Click(object sender, EventArgs e)
+        {
+            // Ensure the cart is not empty
+            if (guna2DataGridView3.Rows.Count == 0)
+            {
+                MessageBox.Show("Cart is empty. Add items before checking out.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Generate a unique order number (e.g., GUID)
+            string orderNumber = Guid.NewGuid().ToString().Substring(0, 8); // 8-character unique ID
+            customer_ordernumber.Text = orderNumber; // Display it, if needed, but make it non-editable
+
+            // Gather customer information
+            string fullname = customer_fullname.Text.Trim();
+            string phoneNumber = customer_phonenumber.Text.Trim();
+            string address = customer_address.Text.Trim();
+            string paymentMethod = "Cash"; // Fixed to Cash for now
+            decimal totalAmount;
+
+            // Validate customer input
+            if (string.IsNullOrWhiteSpace(fullname) ||
+                string.IsNullOrWhiteSpace(phoneNumber) ||
+                string.IsNullOrWhiteSpace(address) ||
+                !decimal.TryParse(customer_totalamount.Text.Trim(), out totalAmount) ||
+                totalAmount <= 0)
+            {
+                MessageBox.Show("Please fill in all required customer details and ensure total amount is valid.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Database connection string
+            string connectionString = "Server=localhost;Database=it12proj;User ID=root;Password=;";
+
+            // Open database connection
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    using (MySqlTransaction transaction = connection.BeginTransaction())
+                    {
+                        string insertQuery = @"
+                INSERT INTO checkout_orders (
+                    order_number, product_name, product_description, product_price, quantity, 
+                    brand, category, serial_number, batch_number, supplier, 
+                    fullname, phone_number, address, payment_method, total_amount
+                ) VALUES (
+                    @orderNumber, @productName, @productDescription, @productPrice, @quantity, 
+                    @brand, @category, @serialNumber, @batchNumber, @supplier, 
+                    @fullname, @phoneNumber, @address, @paymentMethod, @totalAmount
+                )";
+
+                        // Loop through the rows in the cart (DataGridView)
+                        foreach (DataGridViewRow row in guna2DataGridView3.Rows)
+                        {
+                            // Skip the empty row placeholder
+                            if (row.IsNewRow) continue;
+
+                            // Ensure data exists in the current row
+                            if (row.Cells[0].Value == null || row.Cells[1].Value == null || row.Cells[2].Value == null)
+                            {
+                                MessageBox.Show("Cart contains invalid or missing product data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+
+                            string productName = row.Cells[0].Value.ToString();  // Product Name
+                            string productDescription = row.Cells[1].Value?.ToString() ?? string.Empty; // Product Description (optional)
+                            decimal productPrice = Convert.ToDecimal(row.Cells[2].Value);  // Product Price
+                            int quantity = Convert.ToInt32(row.Cells[3].Value);  // Quantity
+                            string brand = row.Cells[4].Value?.ToString() ?? string.Empty;  // Brand (optional)
+                            string category = row.Cells[5].Value?.ToString() ?? string.Empty;  // Category (optional)
+                            string serialNumber = row.Cells[6].Value?.ToString() ?? string.Empty;  // Serial Number (optional)
+                            string batchNumber = row.Cells[7].Value?.ToString() ?? string.Empty;  // Batch Number (optional)
+                            string supplier = row.Cells[8].Value?.ToString() ?? string.Empty;  // Supplier (optional)
+
+                            // Debugging log to check data before inserting
+                            Console.WriteLine($"Processing: {productName}, Price: {productPrice}, Quantity: {quantity}");
+
+                            // Insert each item in the cart into the database
+                            using (MySqlCommand command = new MySqlCommand(insertQuery, connection, transaction))
+                            {
+                                command.Parameters.AddWithValue("@orderNumber", orderNumber);
+                                command.Parameters.AddWithValue("@productName", productName);
+                                command.Parameters.AddWithValue("@productDescription", productDescription);
+                                command.Parameters.AddWithValue("@productPrice", productPrice);
+                                command.Parameters.AddWithValue("@quantity", quantity);
+                                command.Parameters.AddWithValue("@brand", brand);
+                                command.Parameters.AddWithValue("@category", category);
+                                command.Parameters.AddWithValue("@serialNumber", serialNumber);
+                                command.Parameters.AddWithValue("@batchNumber", batchNumber);
+                                command.Parameters.AddWithValue("@supplier", supplier);
+                                command.Parameters.AddWithValue("@fullname", fullname);
+                                command.Parameters.AddWithValue("@phoneNumber", phoneNumber);
+                                command.Parameters.AddWithValue("@address", address);
+                                command.Parameters.AddWithValue("@paymentMethod", paymentMethod);
+                                command.Parameters.AddWithValue("@totalAmount", totalAmount);
+
+                                command.ExecuteNonQuery();
+                            }
+                        }
+
+                        // Commit the transaction
+                        transaction.Commit();
+
+                        // Clear cart and reset fields after successful checkout
+                        guna2DataGridView3.Rows.Clear();
+                        customer_fullname.Clear();
+                        customer_phonenumber.Clear();
+                        customer_address.Clear();
+                        customer_totalamount.Clear();
+                        customer_ordernumber.Clear();
+
+                        MessageBox.Show("Order successfully checked out and saved!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred while processing the order: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+
+
+
+        // Method to generate a random order number
+        private string GenerateOrderNumber()
+        {
+            return "ORD" + DateTime.Now.ToString("yyyyMMddHHmmss") + new Random().Next(100, 999).ToString();
+        }
+
+
     }
 }
 
