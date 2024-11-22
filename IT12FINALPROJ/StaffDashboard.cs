@@ -865,58 +865,73 @@ namespace IT12FINALPROJ
 
         private void guna2Button14_Click_1(object sender, EventArgs e)
         {
+            // Ensure at least one row is selected
             if (guna2DataGridView2.SelectedRows.Count > 0)
             {
-                DataGridViewRow selectedRow = guna2DataGridView2.SelectedRows[0];
-                string productName = selectedRow.Cells["product_name"].Value.ToString();
-                string productDescription = selectedRow.Cells["product_description"].Value.ToString();
-                decimal productPrice = Convert.ToDecimal(selectedRow.Cells["product_price"].Value);
-                string brand = selectedRow.Cells["brand"].Value.ToString();
-                string category = selectedRow.Cells["category"].Value.ToString();
-                string serialNumber = selectedRow.Cells["serial_number"].Value.ToString();
-                string batchNumber = selectedRow.Cells["batch_number"].Value.ToString();
-                string supplier = selectedRow.Cells["supplier"].Value.ToString();
-
+                // Show confirmation panel
                 confirmationpanelorder.Visible = true;
 
+                // Remove existing handlers to avoid stacking
                 confirmorder.Click -= ConfirmOrderClick;
                 cancelorder.Click -= CancelOrderClick;
 
+                // Attach fresh event handlers
                 confirmorder.Click += ConfirmOrderClick;
                 cancelorder.Click += CancelOrderClick;
 
+                // Define the ConfirmOrderClick logic
                 void ConfirmOrderClick(object s, EventArgs args)
                 {
-                    int quantity = (int)quantityorder.Value;
-
-                    if (quantity > 0)
+                    // Re-fetch the currently selected row (fresh reference)
+                    if (guna2DataGridView2.SelectedRows.Count > 0)
                     {
-                        decimal totalPrice = productPrice * quantity;
+                        DataGridViewRow selectedRow = guna2DataGridView2.SelectedRows[0];
 
-                        guna2DataGridView3.Rows.Add(
-                            productName,
-                            productDescription,
-                            productPrice,
-                            quantity,
-                            totalPrice,
-                            brand,
-                            category,
-                            serialNumber,
-                            batchNumber,
-                            supplier
-                        );
+                        // Extract data from the selected row
+                        string productName = selectedRow.Cells["product_name"].Value.ToString();
+                        string productDescription = selectedRow.Cells["product_description"].Value.ToString();
+                        decimal productPrice = Convert.ToDecimal(selectedRow.Cells["product_price"].Value);
+                        string brand = selectedRow.Cells["brand"].Value.ToString();
+                        string category = selectedRow.Cells["category"].Value.ToString();
+                        string serialNumber = selectedRow.Cells["serial_number"].Value.ToString();
+                        string batchNumber = selectedRow.Cells["batch_number"].Value.ToString();
+                        string supplier = selectedRow.Cells["supplier"].Value.ToString();
 
-                        MessageBox.Show("Item added to cart successfully!");
+                        // Get the quantity entered
+                        int quantity = (int)quantityorder.Value;
 
-                        quantityorder.Value = quantityorder.Minimum;
-                        confirmationpanelorder.Visible = false;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Please enter a valid quantity.");
+                        if (quantity > 0)
+                        {
+                            decimal totalPrice = productPrice * quantity;
+
+                            // Add the item to the cart
+                            guna2DataGridView3.Rows.Add(
+                                productName,
+                                productDescription,
+                                productPrice,
+                                quantity,
+                                totalPrice,
+                                brand,
+                                category,
+                                serialNumber,
+                                batchNumber,
+                                supplier
+                            );
+
+                            MessageBox.Show("Item added to cart successfully!");
+
+                            // Reset quantity and hide the confirmation panel
+                            quantityorder.Value = quantityorder.Minimum;
+                            confirmationpanelorder.Visible = false;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Please enter a valid quantity.");
+                        }
                     }
                 }
 
+                // Define the CancelOrderClick logic
                 void CancelOrderClick(object s, EventArgs args)
                 {
                     confirmationpanelorder.Visible = false;
@@ -927,6 +942,7 @@ namespace IT12FINALPROJ
                 MessageBox.Show("Please select a product to add to the cart.");
             }
         }
+
 
 
 
@@ -1232,7 +1248,7 @@ namespace IT12FINALPROJ
 
         private void confirmorderbtn_summaryorder_Click(object sender, EventArgs e)
         {
-            // Ensure the cart is not empty
+        
             if (guna2DataGridView3.Rows.Count == 0)
             {
                 MessageBox.Show("Cart is empty. Add items before checking out.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -1362,7 +1378,23 @@ namespace IT12FINALPROJ
             return "ORD" + DateTime.Now.ToString("yyyyMMddHHmmss") + new Random().Next(100, 999).ToString();
         }
 
+        private void guna2Button20_Click(object sender, EventArgs e) //! RESET TEXT INPUTS FOR ADDING NEW PRODUCTS
+        {
+            Productname.Clear();
+            Productdescription.Clear();
+            //  productunit.SelectedItem.ToString();
+            productprice.Clear();
+            productbrand.Clear();
+            //  category.SelectedItem();
+            Productsupplier.Clear();
+            Productbatchnumber.Clear();
+            Productserialnumber.Clear();
+        }
 
+        private void guna2Button17_Click(object sender, EventArgs e)
+        {
+            LoadProductsOnOrder("Monitor");
+        }
     }
 }
 

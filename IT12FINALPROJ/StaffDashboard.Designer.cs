@@ -154,6 +154,16 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges117 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges120 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges121 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges144 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges145 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges146 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges147 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges148 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges149 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges150 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges151 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges168 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges169 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges142 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges143 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges122 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
@@ -179,16 +189,6 @@
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges144 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges145 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges146 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges147 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges148 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges149 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges150 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges151 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges168 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges169 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges152 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges153 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges162 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
@@ -371,6 +371,11 @@
             guna2CirclePictureBox3 = new Guna.UI2.WinForms.Guna2CirclePictureBox();
             guna2TextBox3 = new Guna.UI2.WinForms.Guna2TextBox();
             tabPage4 = new TabPage();
+            guna2Button17 = new Guna.UI2.WinForms.Guna2Button();
+            keyboardbutton = new Guna.UI2.WinForms.Guna2Button();
+            mousebutton = new Guna.UI2.WinForms.Guna2Button();
+            headsetbutton = new Guna.UI2.WinForms.Guna2Button();
+            guna2Panel24 = new Guna.UI2.WinForms.Guna2Panel();
             panel_summaryorder = new Guna.UI2.WinForms.Guna2Panel();
             guna2Button15 = new Guna.UI2.WinForms.Guna2Button();
             confirmorderbtn_summaryorder = new Guna.UI2.WinForms.Guna2Button();
@@ -392,11 +397,6 @@
             guna2PictureBox12 = new Guna.UI2.WinForms.Guna2PictureBox();
             bigLabel1 = new ReaLTaiizor.Controls.BigLabel();
             guna2DataGridView3 = new Guna.UI2.WinForms.Guna2DataGridView();
-            guna2Button17 = new Guna.UI2.WinForms.Guna2Button();
-            keyboardbutton = new Guna.UI2.WinForms.Guna2Button();
-            mousebutton = new Guna.UI2.WinForms.Guna2Button();
-            headsetbutton = new Guna.UI2.WinForms.Guna2Button();
-            guna2Panel24 = new Guna.UI2.WinForms.Guna2Panel();
             openbtn_sumarrycart = new Guna.UI2.WinForms.Guna2Button();
             confirmationpanelorder = new Guna.UI2.WinForms.Guna2Panel();
             confirmorder = new Guna.UI2.WinForms.Guna2Button();
@@ -491,11 +491,11 @@
             guna2Panel9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)guna2CirclePictureBox3).BeginInit();
             tabPage4.SuspendLayout();
+            guna2Panel24.SuspendLayout();
             panel_summaryorder.SuspendLayout();
             guna2Panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)guna2PictureBox12).BeginInit();
             ((System.ComponentModel.ISupportInitialize)guna2DataGridView3).BeginInit();
-            guna2Panel24.SuspendLayout();
             confirmationpanelorder.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)quantityorder).BeginInit();
             ((System.ComponentModel.ISupportInitialize)guna2PictureBox8).BeginInit();
@@ -524,7 +524,7 @@
             materialTabControl1.Multiline = true;
             materialTabControl1.Name = "materialTabControl1";
             materialTabControl1.SelectedIndex = 0;
-            materialTabControl1.Size = new Size(1448, 777);
+            materialTabControl1.Size = new Size(1750, 777);
             materialTabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -543,7 +543,7 @@
             tabPage1.Location = new Point(4, 27);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(1440, 746);
+            tabPage1.Size = new Size(1742, 746);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Dashboard";
             // 
@@ -621,10 +621,10 @@
             guna2Panel18.Controls.Add(guna2HtmlLabel20);
             guna2Panel18.CustomizableEdges = customizableEdges6;
             guna2Panel18.FillColor = Color.White;
-            guna2Panel18.Location = new Point(846, 314);
+            guna2Panel18.Location = new Point(846, 325);
             guna2Panel18.Name = "guna2Panel18";
             guna2Panel18.ShadowDecoration.CustomizableEdges = customizableEdges7;
-            guna2Panel18.Size = new Size(375, 418);
+            guna2Panel18.Size = new Size(457, 418);
             guna2Panel18.TabIndex = 6;
             // 
             // guna2HtmlLabel20
@@ -668,7 +668,7 @@
             guna2Panel11.Controls.Add(guna2HtmlLabel26);
             guna2Panel11.CustomizableEdges = customizableEdges29;
             guna2Panel11.FillColor = Color.White;
-            guna2Panel11.Location = new Point(33, 314);
+            guna2Panel11.Location = new Point(33, 325);
             guna2Panel11.Name = "guna2Panel11";
             guna2Panel11.ShadowDecoration.CustomizableEdges = customizableEdges30;
             guna2Panel11.Size = new Size(781, 418);
@@ -1354,7 +1354,7 @@
             tabPage2.Location = new Point(4, 27);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(1440, 746);
+            tabPage2.Size = new Size(1742, 746);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Add Product";
             // 
@@ -1493,6 +1493,7 @@
             guna2Button20.Size = new Size(276, 45);
             guna2Button20.TabIndex = 17;
             guna2Button20.Text = "Reset";
+            guna2Button20.Click += guna2Button20_Click;
             // 
             // guna2vSeparator1
             // 
@@ -1838,7 +1839,7 @@
             tabPage3.ImageKey = "ballot (1).png";
             tabPage3.Location = new Point(4, 27);
             tabPage3.Name = "tabPage3";
-            tabPage3.Size = new Size(1440, 746);
+            tabPage3.Size = new Size(1742, 746);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "Table Explorer";
             tabPage3.UseVisualStyleBackColor = true;
@@ -2059,7 +2060,7 @@
             guna2Panel10.Location = new Point(39, 194);
             guna2Panel10.Name = "guna2Panel10";
             guna2Panel10.ShadowDecoration.CustomizableEdges = customizableEdges114;
-            guna2Panel10.Size = new Size(1319, 531);
+            guna2Panel10.Size = new Size(1607, 531);
             guna2Panel10.TabIndex = 6;
             // 
             // returndescription
@@ -2203,7 +2204,7 @@
             guna2DataGridView1.Location = new Point(14, 16);
             guna2DataGridView1.Name = "guna2DataGridView1";
             guna2DataGridView1.RowHeadersVisible = false;
-            guna2DataGridView1.Size = new Size(1292, 503);
+            guna2DataGridView1.Size = new Size(1570, 503);
             guna2DataGridView1.TabIndex = 0;
             guna2DataGridView1.Theme = Guna.UI2.WinForms.Enums.DataGridViewPresetThemes.Orange;
             guna2DataGridView1.ThemeStyle.AlternatingRowsStyle.BackColor = Color.FromArgb(251, 225, 184);
@@ -2345,9 +2346,118 @@
             tabPage4.Location = new Point(4, 27);
             tabPage4.Name = "tabPage4";
             tabPage4.Padding = new Padding(3);
-            tabPage4.Size = new Size(1440, 746);
+            tabPage4.Size = new Size(1742, 746);
             tabPage4.TabIndex = 3;
             tabPage4.Text = "Order";
+            // 
+            // guna2Button17
+            // 
+            guna2Button17.BorderRadius = 20;
+            guna2Button17.CustomizableEdges = customizableEdges144;
+            guna2Button17.DisabledState.BorderColor = Color.DarkGray;
+            guna2Button17.DisabledState.CustomBorderColor = Color.DarkGray;
+            guna2Button17.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            guna2Button17.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            guna2Button17.FillColor = Color.White;
+            guna2Button17.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            guna2Button17.ForeColor = Color.Black;
+            guna2Button17.Image = (Image)resources.GetObject("guna2Button17.Image");
+            guna2Button17.ImageOffset = new Point(12, -10);
+            guna2Button17.ImageSize = new Size(30, 30);
+            guna2Button17.Location = new Point(372, 67);
+            guna2Button17.Name = "guna2Button17";
+            guna2Button17.ShadowDecoration.CustomizableEdges = customizableEdges145;
+            guna2Button17.Size = new Size(106, 104);
+            guna2Button17.TabIndex = 12;
+            guna2Button17.Text = "Headset";
+            guna2Button17.TextOffset = new Point(-8, 20);
+            guna2Button17.Click += guna2Button17_Click;
+            // 
+            // keyboardbutton
+            // 
+            keyboardbutton.BorderRadius = 20;
+            keyboardbutton.CustomizableEdges = customizableEdges146;
+            keyboardbutton.DisabledState.BorderColor = Color.DarkGray;
+            keyboardbutton.DisabledState.CustomBorderColor = Color.DarkGray;
+            keyboardbutton.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            keyboardbutton.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            keyboardbutton.FillColor = Color.White;
+            keyboardbutton.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            keyboardbutton.ForeColor = Color.Black;
+            keyboardbutton.Image = (Image)resources.GetObject("keyboardbutton.Image");
+            keyboardbutton.ImageOffset = new Point(14, -10);
+            keyboardbutton.ImageSize = new Size(40, 40);
+            keyboardbutton.Location = new Point(251, 67);
+            keyboardbutton.Name = "keyboardbutton";
+            keyboardbutton.ShadowDecoration.CustomizableEdges = customizableEdges147;
+            keyboardbutton.Size = new Size(106, 104);
+            keyboardbutton.TabIndex = 11;
+            keyboardbutton.Text = "Keyboard";
+            keyboardbutton.TextOffset = new Point(-10, 20);
+            keyboardbutton.Click += keyboardbutton_Click;
+            // 
+            // mousebutton
+            // 
+            mousebutton.BorderRadius = 20;
+            mousebutton.CustomizableEdges = customizableEdges148;
+            mousebutton.DisabledState.BorderColor = Color.DarkGray;
+            mousebutton.DisabledState.CustomBorderColor = Color.DarkGray;
+            mousebutton.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            mousebutton.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            mousebutton.FillColor = Color.White;
+            mousebutton.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            mousebutton.ForeColor = Color.Black;
+            mousebutton.Image = (Image)resources.GetObject("mousebutton.Image");
+            mousebutton.ImageOffset = new Point(11, -10);
+            mousebutton.ImageSize = new Size(35, 35);
+            mousebutton.Location = new Point(130, 67);
+            mousebutton.Name = "mousebutton";
+            mousebutton.ShadowDecoration.CustomizableEdges = customizableEdges149;
+            mousebutton.Size = new Size(106, 104);
+            mousebutton.TabIndex = 10;
+            mousebutton.Text = "Mouse";
+            mousebutton.TextOffset = new Point(-8, 20);
+            mousebutton.Click += mousebutton_Click;
+            // 
+            // headsetbutton
+            // 
+            headsetbutton.BorderRadius = 20;
+            headsetbutton.CustomizableEdges = customizableEdges150;
+            headsetbutton.DisabledState.BorderColor = Color.DarkGray;
+            headsetbutton.DisabledState.CustomBorderColor = Color.DarkGray;
+            headsetbutton.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            headsetbutton.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            headsetbutton.FillColor = Color.White;
+            headsetbutton.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            headsetbutton.ForeColor = Color.Black;
+            headsetbutton.Image = (Image)resources.GetObject("headsetbutton.Image");
+            headsetbutton.ImageOffset = new Point(12, -10);
+            headsetbutton.ImageSize = new Size(30, 30);
+            headsetbutton.Location = new Point(8, 67);
+            headsetbutton.Name = "headsetbutton";
+            headsetbutton.ShadowDecoration.CustomizableEdges = customizableEdges151;
+            headsetbutton.Size = new Size(106, 104);
+            headsetbutton.TabIndex = 9;
+            headsetbutton.Text = "Headset";
+            headsetbutton.TextOffset = new Point(-8, 20);
+            headsetbutton.Click += headsetbutton_Click;
+            // 
+            // guna2Panel24
+            // 
+            guna2Panel24.BorderRadius = 20;
+            guna2Panel24.Controls.Add(openbtn_sumarrycart);
+            guna2Panel24.Controls.Add(confirmationpanelorder);
+            guna2Panel24.Controls.Add(guna2TextBox4);
+            guna2Panel24.Controls.Add(guna2Button14);
+            guna2Panel24.Controls.Add(guna2HtmlLabel45);
+            guna2Panel24.Controls.Add(guna2DataGridView2);
+            guna2Panel24.CustomizableEdges = customizableEdges168;
+            guna2Panel24.FillColor = Color.White;
+            guna2Panel24.Location = new Point(8, 198);
+            guna2Panel24.Name = "guna2Panel24";
+            guna2Panel24.ShadowDecoration.CustomizableEdges = customizableEdges169;
+            guna2Panel24.Size = new Size(1357, 529);
+            guna2Panel24.TabIndex = 8;
             // 
             // panel_summaryorder
             // 
@@ -2372,7 +2482,7 @@
             panel_summaryorder.Controls.Add(guna2DataGridView3);
             panel_summaryorder.CustomizableEdges = customizableEdges142;
             panel_summaryorder.FillColor = Color.White;
-            panel_summaryorder.Location = new Point(69, 37);
+            panel_summaryorder.Location = new Point(113, 37);
             panel_summaryorder.Name = "panel_summaryorder";
             panel_summaryorder.ShadowDecoration.CustomizableEdges = customizableEdges143;
             panel_summaryorder.Size = new Size(1237, 687);
@@ -2737,114 +2847,6 @@
             guna2DataGridView3.ThemeStyle.RowsStyle.SelectionForeColor = Color.FromArgb(71, 69, 94);
             guna2DataGridView3.CellContentClick += guna2DataGridView3_CellContentClick;
             // 
-            // guna2Button17
-            // 
-            guna2Button17.BorderRadius = 20;
-            guna2Button17.CustomizableEdges = customizableEdges144;
-            guna2Button17.DisabledState.BorderColor = Color.DarkGray;
-            guna2Button17.DisabledState.CustomBorderColor = Color.DarkGray;
-            guna2Button17.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            guna2Button17.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            guna2Button17.FillColor = Color.White;
-            guna2Button17.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            guna2Button17.ForeColor = Color.Black;
-            guna2Button17.Image = (Image)resources.GetObject("guna2Button17.Image");
-            guna2Button17.ImageOffset = new Point(12, -10);
-            guna2Button17.ImageSize = new Size(30, 30);
-            guna2Button17.Location = new Point(372, 67);
-            guna2Button17.Name = "guna2Button17";
-            guna2Button17.ShadowDecoration.CustomizableEdges = customizableEdges145;
-            guna2Button17.Size = new Size(106, 104);
-            guna2Button17.TabIndex = 12;
-            guna2Button17.Text = "Headset";
-            guna2Button17.TextOffset = new Point(-8, 20);
-            // 
-            // keyboardbutton
-            // 
-            keyboardbutton.BorderRadius = 20;
-            keyboardbutton.CustomizableEdges = customizableEdges146;
-            keyboardbutton.DisabledState.BorderColor = Color.DarkGray;
-            keyboardbutton.DisabledState.CustomBorderColor = Color.DarkGray;
-            keyboardbutton.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            keyboardbutton.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            keyboardbutton.FillColor = Color.White;
-            keyboardbutton.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            keyboardbutton.ForeColor = Color.Black;
-            keyboardbutton.Image = (Image)resources.GetObject("keyboardbutton.Image");
-            keyboardbutton.ImageOffset = new Point(14, -10);
-            keyboardbutton.ImageSize = new Size(40, 40);
-            keyboardbutton.Location = new Point(251, 67);
-            keyboardbutton.Name = "keyboardbutton";
-            keyboardbutton.ShadowDecoration.CustomizableEdges = customizableEdges147;
-            keyboardbutton.Size = new Size(106, 104);
-            keyboardbutton.TabIndex = 11;
-            keyboardbutton.Text = "Keyboard";
-            keyboardbutton.TextOffset = new Point(-10, 20);
-            keyboardbutton.Click += keyboardbutton_Click;
-            // 
-            // mousebutton
-            // 
-            mousebutton.BorderRadius = 20;
-            mousebutton.CustomizableEdges = customizableEdges148;
-            mousebutton.DisabledState.BorderColor = Color.DarkGray;
-            mousebutton.DisabledState.CustomBorderColor = Color.DarkGray;
-            mousebutton.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            mousebutton.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            mousebutton.FillColor = Color.White;
-            mousebutton.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            mousebutton.ForeColor = Color.Black;
-            mousebutton.Image = (Image)resources.GetObject("mousebutton.Image");
-            mousebutton.ImageOffset = new Point(11, -10);
-            mousebutton.ImageSize = new Size(35, 35);
-            mousebutton.Location = new Point(130, 67);
-            mousebutton.Name = "mousebutton";
-            mousebutton.ShadowDecoration.CustomizableEdges = customizableEdges149;
-            mousebutton.Size = new Size(106, 104);
-            mousebutton.TabIndex = 10;
-            mousebutton.Text = "Mouse";
-            mousebutton.TextOffset = new Point(-8, 20);
-            mousebutton.Click += mousebutton_Click;
-            // 
-            // headsetbutton
-            // 
-            headsetbutton.BorderRadius = 20;
-            headsetbutton.CustomizableEdges = customizableEdges150;
-            headsetbutton.DisabledState.BorderColor = Color.DarkGray;
-            headsetbutton.DisabledState.CustomBorderColor = Color.DarkGray;
-            headsetbutton.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            headsetbutton.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            headsetbutton.FillColor = Color.White;
-            headsetbutton.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            headsetbutton.ForeColor = Color.Black;
-            headsetbutton.Image = (Image)resources.GetObject("headsetbutton.Image");
-            headsetbutton.ImageOffset = new Point(12, -10);
-            headsetbutton.ImageSize = new Size(30, 30);
-            headsetbutton.Location = new Point(8, 67);
-            headsetbutton.Name = "headsetbutton";
-            headsetbutton.ShadowDecoration.CustomizableEdges = customizableEdges151;
-            headsetbutton.Size = new Size(106, 104);
-            headsetbutton.TabIndex = 9;
-            headsetbutton.Text = "Headset";
-            headsetbutton.TextOffset = new Point(-8, 20);
-            headsetbutton.Click += headsetbutton_Click;
-            // 
-            // guna2Panel24
-            // 
-            guna2Panel24.BorderRadius = 20;
-            guna2Panel24.Controls.Add(openbtn_sumarrycart);
-            guna2Panel24.Controls.Add(confirmationpanelorder);
-            guna2Panel24.Controls.Add(guna2TextBox4);
-            guna2Panel24.Controls.Add(guna2Button14);
-            guna2Panel24.Controls.Add(guna2HtmlLabel45);
-            guna2Panel24.Controls.Add(guna2DataGridView2);
-            guna2Panel24.CustomizableEdges = customizableEdges168;
-            guna2Panel24.FillColor = Color.White;
-            guna2Panel24.Location = new Point(8, 198);
-            guna2Panel24.Name = "guna2Panel24";
-            guna2Panel24.ShadowDecoration.CustomizableEdges = customizableEdges169;
-            guna2Panel24.Size = new Size(1357, 529);
-            guna2Panel24.TabIndex = 8;
-            // 
             // openbtn_sumarrycart
             // 
             openbtn_sumarrycart.BorderRadius = 10;
@@ -3056,7 +3058,7 @@
             guna2DataGridView2.Location = new Point(15, 86);
             guna2DataGridView2.Name = "guna2DataGridView2";
             guna2DataGridView2.RowHeadersVisible = false;
-            guna2DataGridView2.Size = new Size(1298, 428);
+            guna2DataGridView2.Size = new Size(1327, 428);
             guna2DataGridView2.TabIndex = 14;
             guna2DataGridView2.ThemeStyle.AlternatingRowsStyle.BackColor = Color.White;
             guna2DataGridView2.ThemeStyle.AlternatingRowsStyle.Font = null;
@@ -3121,7 +3123,7 @@
             tabPage5.ImageKey = "box-open (1).png";
             tabPage5.Location = new Point(4, 27);
             tabPage5.Name = "tabPage5";
-            tabPage5.Size = new Size(1440, 746);
+            tabPage5.Size = new Size(1742, 746);
             tabPage5.TabIndex = 4;
             tabPage5.Text = "Products";
             tabPage5.UseVisualStyleBackColor = true;
@@ -3653,7 +3655,7 @@
             // 
             tabPage6.Location = new Point(4, 27);
             tabPage6.Name = "tabPage6";
-            tabPage6.Size = new Size(1440, 746);
+            tabPage6.Size = new Size(1742, 746);
             tabPage6.TabIndex = 5;
             tabPage6.Text = "tabPage6";
             tabPage6.UseVisualStyleBackColor = true;
@@ -3700,7 +3702,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1454, 844);
+            ClientSize = new Size(1756, 844);
             Controls.Add(materialTabControl1);
             DrawerIsOpen = true;
             DrawerShowIconsWhenHidden = true;
@@ -3756,14 +3758,14 @@
             ((System.ComponentModel.ISupportInitialize)guna2CirclePictureBox3).EndInit();
             tabPage4.ResumeLayout(false);
             tabPage4.PerformLayout();
+            guna2Panel24.ResumeLayout(false);
+            guna2Panel24.PerformLayout();
             panel_summaryorder.ResumeLayout(false);
             panel_summaryorder.PerformLayout();
             guna2Panel5.ResumeLayout(false);
             guna2Panel5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)guna2PictureBox12).EndInit();
             ((System.ComponentModel.ISupportInitialize)guna2DataGridView3).EndInit();
-            guna2Panel24.ResumeLayout(false);
-            guna2Panel24.PerformLayout();
             confirmationpanelorder.ResumeLayout(false);
             confirmationpanelorder.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)quantityorder).EndInit();
